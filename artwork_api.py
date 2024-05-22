@@ -208,10 +208,10 @@ def update_data_store():
     print("Scraped Fizdi website")
     mojarto_df = scrape_mojarto()
     print("Scraped Mojarto website")
-    # saatchiart_df = scrape_saatchiart()
+    saatchiart_df = scrape_saatchiart()
     print("Scraped Saatchiart website")
-    combined_df = pd.concat([formart_df, zigguratss_df, artflute_df, fizdi_df, mojarto_df], ignore_index=True)
-    # combined_df = pd.concat([formart_df, zigguratss_df, artflute_df, fizdi_df, mojarto_df, saatchiart_df], ignore_index=True)
+    # combined_df = pd.concat([formart_df, zigguratss_df, artflute_df, fizdi_df, mojarto_df], ignore_index=True)
+    combined_df = pd.concat([formart_df, zigguratss_df, artflute_df, fizdi_df, mojarto_df, saatchiart_df], ignore_index=True)
 
     # Store all artwork names and artist names as pairs
     all_artworks_artists = list(zip(combined_df['Name'], combined_df['Artist']))
@@ -231,7 +231,7 @@ def update_data_store():
     data_store['artflute'] = artflute_df
     data_store['fizdi'] = fizdi_df
     data_store['mojarto'] = mojarto_df
-    # data_store['saatchiart'] = saatchiart_df
+    data_store['saatchiart'] = saatchiart_df
     data_store['combined'] = combined_df
 
     print("Data store updated.")
@@ -264,7 +264,7 @@ def get_artwork():
     if filtered_df.empty:
         return jsonify({"message": "No matching artwork found."}), 404
     else:
-        return filtered_df.to_json(orient="records"), 200
+        return filtered_df.to_json(orient="records", force_ascii=False), 200
 
 if __name__ == "__main__":
     # Start the scheduler
